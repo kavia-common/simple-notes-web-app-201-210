@@ -1,0 +1,72 @@
+.kavia-btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.55em 1.35em;
+  cursor: pointer;
+  display: inline-block;
+  background: #e5e7eb;
+  color: #282c34;
+  transition: background 0.18s, color 0.16s, box-shadow 0.12s;
+  outline: none;
+  box-shadow: 0 2px 7px rgba(59, 130, 246, 0.08);
+  position: relative;
+  line-height: 1.15;
+}
+
+.kavia-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: #fff;
+  box-shadow: 0 2px 0 #2563eb30;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 3px 8px #3b82f670, 0 0 0 2px #3b82f645;
+}
+
+.btn-success {
+  background: #06b6d4;
+  color: #fff;
+  box-shadow: 0 2px 0 #0891b230;
+}
+.btn-success:hover,
+.btn-success:focus-visible {
+  background: #0891b2;
+  color: #fff;
+  box-shadow: 0 3px 8px #06b6d470, 0 0 0 2px #06b6d450;
+}
+
+.btn-default {
+  background: #f8fafc;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+.btn-default:hover,
+.btn-default:focus-visible {
+  background: #e5e7eb;
+  color: #22223b;
+  box-shadow: 0 1.5px 6px #06b6d415;
+}
+
+/* Responsive size for navbar/toolbar */
+.kavia-btn {
+  min-width: 40px;
+  min-height: 36px;
+}
+
+@media (max-width: 600px) {
+  .kavia-btn {
+    font-size: 0.92rem;
+    padding: 0.48em 1em;
+    min-height: 32px;
+  }
+}
