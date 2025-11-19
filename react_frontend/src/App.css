@@ -42,7 +42,10 @@
   align-items: stretch;
   flex: 1;
   min-height: 0;
+  /* Sidebar is now handled as first child (see App.js) */
 }
+
+/* Sidebar handled in its own src/components/Sidebar.css */
 
 /* Left Pane (NotesList) */
 .app-list {
@@ -56,6 +59,7 @@
   flex-direction: column;
   align-items: stretch;
   padding: 0;
+  z-index: 2;
 }
 
 .app-list__demo {
