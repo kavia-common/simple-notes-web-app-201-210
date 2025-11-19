@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
 import './Button.css';
 import Dropdown from './Dropdown';
 import './Dropdown.css';
+import ToggleSwitch from './ToggleSwitch';
 
 /**
  * PUBLIC_INTERFACE
@@ -10,7 +11,7 @@ import './Dropdown.css';
  * 
  * Displays the app title. Uses primary (#3b82f6) color for background accent.
  * Sticky at the top, minimal, modern style.
- * Contains "New Note" action button and an "Account" dropdown on the right.
+ * Contains "New Note" action button, a Dark Mode switch (placeholder), and an "Account" dropdown on the right.
  */
 const Navbar = () => {
   // Placeholder handler for demo; to be replaced with actual modal or navigation in future.
@@ -26,6 +27,9 @@ const Navbar = () => {
     { label: "Sign out", value: "signout", onClick: () => alert("Sign out (demo)") }
   ];
 
+  // State for the ToggleSwitch ("Dark Mode" placeholder, not wired to theme)
+  const [darkChecked, setDarkChecked] = useState(false);
+
   return (
     <nav className="navbar">
       <div className="navbar__brand">
@@ -39,6 +43,14 @@ const Navbar = () => {
         >
           + New Note
         </Button>
+        <ToggleSwitch
+          checked={darkChecked}
+          onChange={(checked, e) => setDarkChecked(checked)}
+          label="Dark Mode"
+          id="navbar-darkmode-switch"
+          name="navbar-darkmode-switch"
+          // not connected to actual theme, demonstrative only
+        />
         <Dropdown
           label={<span style={{display:"flex",alignItems:"center"}}>Account</span>}
           items={accountItems}
