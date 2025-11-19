@@ -9,7 +9,39 @@
   align-items: stretch;
   position: relative;
   z-index: 10;
-  transition: width 0.22s cubic-bezier(.76,.2,.46,.97), box-shadow 0.16s;
+  transition: width 0.22s cubic-bezier(.76,.2,.46,.97), min-width 0.22s cubic-bezier(.76,.2,.46,.97), box-shadow 0.16s;
+}
+
+/* Collapsed (rail) state */
+.sidebar--collapsed {
+  width: 56px !important;
+  min-width: 56px !important;
+  max-width: 56px !important;
+  overflow-x: hidden;
+}
+.sidebar--collapsed .sidebar__title,
+.sidebar--collapsed .sidebar__item-label,
+.sidebar--collapsed .sidebar__footer-text {
+  display: none !important;
+}
+.sidebar--collapsed .sidebar__footer-icon {
+  display: inline-flex !important;
+}
+
+/* Collapsible button (top) - minimal and theme-aware */
+.sidebar__collapse-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 8px;
+  margin-left: 3px;
+  margin-right: 0.18em;
+  background: #ebf2fd;
+  transition: background 0.16s, box-shadow 0.14s;
+}
+.sidebar__collapse-btn:hover,
+.sidebar__collapse-btn:focus-visible {
+  background: #dbeafe;
+  box-shadow: 0 0 7px #3b82f645;
 }
 
 .sidebar__header {
@@ -18,6 +50,7 @@
   justify-content: center;
   padding: 1.5rem 0 1rem 0;
   border-bottom: 1px solid #e8e8f3;
+  gap: 0.3em;
 }
 
 .sidebar__title {
@@ -43,11 +76,30 @@
   border-radius: 0.5em;
   cursor: pointer;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   font-size: 1.03rem;
-  transition: background 0.16s, color 0.14s;
+  transition: background 0.16s, color 0.14s, padding 0.18s;
   margin: 0 0.5rem;
+  gap: 0.63em;
+}
+.sidebar--collapsed .sidebar__item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+  gap: 0; /* Hide gap between icon and label */
+}
+
+.sidebar__item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__item-label {
+  margin-left: 0.65em;
+  display: inline-block;
+  min-width: 0;
 }
 
 .sidebar__item:hover,
@@ -61,6 +113,9 @@
   color: #fff;
   font-weight: 600;
 }
+.sidebar__item--active .sidebar__item-icon svg {
+  filter: drop-shadow(0 0 1.5px #3b82f6bb);
+}
 
 .sidebar__footer {
   padding: 1.15rem 0 1rem 0;
@@ -69,11 +124,24 @@
   color: #90a3bf;
   border-top: 1px solid #e8e8f3;
 }
+.sidebar__footer-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+}
 
 @media (max-width: 900px) {
   .sidebar {
     width: 64px;
     min-width: 46px;
+  }
+  .sidebar--collapsed {
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
   }
   .sidebar__title {
     font-size: 1rem;
