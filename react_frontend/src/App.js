@@ -1,38 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import './components/Navbar.css';
+import { useTheme } from './ThemeContext';
 
 // PUBLIC_INTERFACE
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="App" style={{ background: 'var(--bg-primary)', minHeight: '100vh' }}>
-      <Navbar />
-      <button
-        className="theme-toggle"
-        onClick={toggleTheme}
-        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        style={{
-          position: 'fixed',
-          top: 16,
-          right: 24,
-          zIndex: 110
-        }}
-      >
-        {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-      </button>
+      <Navbar currentTheme={theme} onToggleTheme={toggleTheme} />
+      {/* Remove floating button; theme is toggled via Navbar switch */}
       <main className="app-main-content">
         {/* 
           Replace below with your <NotesList /> and <NoteDetail /> components as appropriate.

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from './Button';
 import './Button.css';
 import Dropdown from './Dropdown';
@@ -11,9 +11,13 @@ import ToggleSwitch from './ToggleSwitch';
  * 
  * Displays the app title. Uses primary (#3b82f6) color for background accent.
  * Sticky at the top, minimal, modern style.
- * Contains "New Note" action button, a Dark Mode switch (placeholder), and an "Account" dropdown on the right.
+ * Contains "New Note" action button, a Dark Mode switch (wired to global theme), and an "Account" dropdown on the right.
+ * 
+ * Props:
+ *   - currentTheme: string ("light" | "dark")
+ *   - onToggleTheme: function to toggle the theme
  */
-const Navbar = () => {
+const Navbar = ({ currentTheme = "light", onToggleTheme = () => {} }) => {
   // Placeholder handler for demo; to be replaced with actual modal or navigation in future.
   const handleNewNote = () => {
     // This could open a modal or route to "create note"
@@ -27,8 +31,8 @@ const Navbar = () => {
     { label: "Sign out", value: "signout", onClick: () => alert("Sign out (demo)") }
   ];
 
-  // State for the ToggleSwitch ("Dark Mode" placeholder, not wired to theme)
-  const [darkChecked, setDarkChecked] = useState(false);
+  // Wire ToggleSwitch to theme state via props
+  const isDark = currentTheme === "dark";
 
   return (
     <nav className="navbar">
@@ -44,15 +48,15 @@ const Navbar = () => {
           + New Note
         </Button>
         <ToggleSwitch
-          checked={darkChecked}
-          onChange={(checked, e) => setDarkChecked(checked)}
+          checked={isDark}
+          onChange={(checked, e) => onToggleTheme()}
           leftLabel="Light"
           rightLabel="Dark"
           showLabels={true}
           labelPosition="inline"
           id="navbar-darkmode-switch"
           name="navbar-darkmode-switch"
-          // not connected to actual theme, demonstrative only
+          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         />
         <Dropdown
           label={<span style={{display:"flex",alignItems:"center"}}>Account</span>}
