@@ -1,0 +1,100 @@
+.kavia-dropdown {
+  display: inline-block;
+  position: relative;
+  font-family: inherit;
+}
+.kavia-dropdown__button {
+  background: #fff;
+  color: #3b82f6;
+  border: 1.5px solid #3b82f6;
+  padding: 0.35em 1em 0.35em 0.8em;
+  border-radius: 0.55em;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 60px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: background 0.18s, color 0.18s, border 0.14s;
+  box-shadow: 0 1.5px 10px rgba(59,130,246,.08);
+  outline: none;
+}
+.kavia-dropdown__button:hover,
+.kavia-dropdown__button:focus-visible,
+.kavia-dropdown__button--active {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+  box-shadow: 0 2.8px 18px #3b82f645;
+}
+.kavia-dropdown__icon {
+  margin-right: 0.25em;
+  display: flex;
+  font-size: 1.15em;
+}
+.kavia-dropdown__arrow {
+  margin-left: 0.45em;
+  font-size: 0.88em;
+  opacity: 0.72;
+}
+.kavia-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 0.3em);
+  right: 0;
+  min-width: max(140px, 100%);
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.57em;
+  box-shadow: 0 7px 21px rgba(59,130,246,0.16), 0 1px 2.5px #3b82f620;
+  z-index: 900;
+  padding: 0.3em 0;
+  margin: 0;
+  list-style: none;
+  animation: dropdown-appear 0.14s cubic-bezier(.78,.07,.56,1) backwards;
+}
+@keyframes dropdown-appear {
+  0% { opacity: 0; transform: scaleY(.97) translateY(-0.18em);}
+  100% { opacity: 1; transform: none;}
+}
+
+.kavia-dropdown__item {
+  color: #22223b;
+  background: none;
+  padding: 0.47em 1.2em 0.47em 1.1em;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.33em;
+  cursor: pointer;
+  transition: background 0.14s, color 0.12s;
+  outline: none;
+  user-select: none;
+  min-width: 0;
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kavia-dropdown__item.focused,
+.kavia-dropdown__item:hover,
+.kavia-dropdown__item:focus-visible {
+  background: #3b82f6;
+  color: #fff;
+}
+.kavia-dropdown__item:active {
+  background: #2563eb;
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .kavia-dropdown__button {
+    min-height: 32px;
+    font-size: 0.97rem;
+    padding: 0.22em 0.9em 0.22em 0.7em;
+  }
+  .kavia-dropdown__menu {
+    min-width: 106px;
+    font-size: 0.92rem;
+    right: 0;
+  }
+}
