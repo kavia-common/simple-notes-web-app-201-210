@@ -1,15 +1,15 @@
 .sidebar {
-  width: 72px;
-  min-width: 58px;
+  width: 128px;
+  min-width: 108px;
   background: #f4f8fd;
-  box-shadow: 1px 0 7px -2px rgba(59,130,246,0.08);
+  box-shadow: 2.5px 0 16px -2px rgba(59,130,246,0.11), 0 1.5px 0 #06b6d414;
   border-right: 1.5px solid #e3e8ee;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   position: relative;
   z-index: 10;
-  transition: width 0.18s cubic-bezier(.76,.2,.46,.97);
+  transition: width 0.22s cubic-bezier(.76,.2,.46,.97), box-shadow 0.16s;
 }
 
 .sidebar__header {
@@ -72,8 +72,8 @@
 
 @media (max-width: 900px) {
   .sidebar {
-    width: 56px;
-    min-width: 50px;
+    width: 64px;
+    min-width: 46px;
   }
   .sidebar__title {
     font-size: 1rem;
