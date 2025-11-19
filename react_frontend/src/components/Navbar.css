@@ -21,6 +21,13 @@
   text-shadow: 0 1px 4px rgba(16,32,60,0.06);
 }
 
+/* Optional search bar, if rendered by prop in the Navbar */
+.navbar__search {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
 /* Room for future navbar actions */
 .navbar__actions {
   margin-left: auto;
