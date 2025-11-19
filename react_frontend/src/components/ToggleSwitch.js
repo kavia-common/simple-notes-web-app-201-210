@@ -10,7 +10,11 @@ import PropTypes from "prop-types";
  *   - checked: boolean (controlled mode, optional)
  *   - defaultChecked: boolean (uncontrolled mode, optional)
  *   - onChange: function(newChecked: boolean, event)
- *   - label: string (optional)
+ *   - label: string (optional, legacy, not used with leftLabel/rightLabel)
+ *   - leftLabel: node/string (optional, will display to left or according to labelPosition)
+ *   - rightLabel: node/string (optional)
+ *   - showLabels: boolean (default: auto, shows if leftLabel/rightLabel exist)
+ *   - labelPosition: "outer"|"inline" (optional, default: "outer") - positions labels outside or inside the switch track
  *   - id: string (optional, for input element)
  *   - name: string (optional, for input element)
  *   - disabled: boolean (optional)
@@ -29,6 +33,10 @@ function ToggleSwitch({
   defaultChecked,
   onChange,
   label,
+  leftLabel,
+  rightLabel,
+  showLabels,
+  labelPosition = "outer",
   id,
   name,
   disabled = false,
@@ -40,6 +48,12 @@ function ToggleSwitch({
   );
   const switchRef = useRef(null);
   const effectiveChecked = isControlled ? checked : internalChecked;
+
+  // Show labels if forced or either is provided
+  const shouldShowLabels =
+    typeof showLabels === "boolean"
+      ? showLabels
+      : !!(leftLabel || rightLabel);
 
   // PUBLIC_INTERFACE
   const handleToggle = (event) => {
@@ -67,8 +81,30 @@ function ToggleSwitch({
     }
   };
 
-  // Keyboard accessibility: forward focus to main switch area
-  // Using <div> instead of <button> for custom switch, since button has default role (but could be done either way)
+  // Compose labels for rendering
+  const renderLabel = (which) => {
+    const value = which === "left" ? leftLabel : rightLabel;
+    if (!value) return null;
+    return (
+      <span
+        style={{
+          minWidth: "1.1em",
+          color: "#22223b",
+          fontSize: "15px",
+          fontWeight: 400,
+          opacity: disabled ? 0.68 : 0.95,
+          userSelect: "none",
+          marginRight: which === "left" ? "0.27em" : 0,
+          marginLeft: which === "right" ? "0.27em" : 0,
+          pointerEvents: "none"
+        }}
+        aria-hidden="true"
+      >
+        {value}
+      </span>
+    );
+  };
+
   return (
     <label
       style={{
@@ -78,57 +114,85 @@ function ToggleSwitch({
         alignItems: "center",
         userSelect: "none",
         fontSize: "16px",
-        gap: "0.46em",
+        gap:
+          labelPosition === "outer"
+            ? "0.46em"
+            : "0", // gap for outside labels
       }}
       htmlFor={id}
       {...props}
     >
+      {/* Left label */}
+      {shouldShowLabels && labelPosition === "outer" && renderLabel("left")}
       <div
-        role="switch"
-        aria-checked={!!effectiveChecked}
-        tabIndex={disabled ? -1 : 0}
-        ref={switchRef}
-        aria-disabled={disabled}
-        onClick={handleToggle}
-        onKeyDown={handleKeyDown}
         style={{
-          width: "36px",
-          height: "20px",
-          minWidth: "36px",
-          background: effectiveChecked ? "#3b82f6" : "#e5e7eb",
-          borderRadius: "10px",
-          border: "1px solid #cbd5e1",
-          position: "relative",
-          transition: "background 0.19s",
-          boxSizing: "border-box",
-          outline: "none",
           display: "inline-flex",
           alignItems: "center",
-          verticalAlign: "middle",
         }}
-        // Ensure focus outline for accessibility
-        onFocus={e => { e.target.style.boxShadow = "0 0 2px 3px #2563eb55"; }}
-        onBlur={e => { e.target.style.boxShadow = "none"; }}
       >
-        <span
+        {/* Inner left label (inline) */}
+        {shouldShowLabels && labelPosition === "inline" && renderLabel("left")}
+        <div
+          role="switch"
+          aria-checked={!!effectiveChecked}
+          tabIndex={disabled ? -1 : 0}
+          ref={switchRef}
+          aria-disabled={disabled}
+          onClick={handleToggle}
+          onKeyDown={handleKeyDown}
           style={{
-            display: "block",
-            width: "16px",
-            height: "16px",
-            background: "#fff",
-            borderRadius: "50%",
-            position: "absolute",
-            top: "50%",
-            left: effectiveChecked ? "18px" : "2px",
-            transform: "translateY(-50%)",
-            transition: "left .17s cubic-bezier(.95,.15,.34,1.32)",
-            boxShadow: "0 1.2px 2.4px #0002",
-            border: "1.2px solid #e5e7eb",
+            width: "36px",
+            height: "20px",
+            minWidth: "36px",
+            background: effectiveChecked ? "#3b82f6" : "#e5e7eb",
+            borderRadius: "10px",
+            border: "1px solid #cbd5e1",
+            position: "relative",
+            transition: "background 0.19s",
+            boxSizing: "border-box",
+            outline: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            verticalAlign: "middle",
+            marginLeft:
+              shouldShowLabels && labelPosition === "inline" && leftLabel
+                ? "0.15em"
+                : "",
+            marginRight:
+              shouldShowLabels && labelPosition === "inline" && rightLabel
+                ? "0.15em"
+                : "",
+            ...(disabled && { pointerEvents: "none" })
           }}
-          aria-hidden="true"
-        />
+          // Ensure focus outline for accessibility
+          onFocus={e => { e.target.style.boxShadow = "0 0 2px 3px #2563eb55"; }}
+          onBlur={e => { e.target.style.boxShadow = "none"; }}
+        >
+          <span
+            style={{
+              display: "block",
+              width: "16px",
+              height: "16px",
+              background: "#fff",
+              borderRadius: "50%",
+              position: "absolute",
+              top: "50%",
+              left: effectiveChecked ? "18px" : "2px",
+              transform: "translateY(-50%)",
+              transition: "left .17s cubic-bezier(.95,.15,.34,1.32)",
+              boxShadow: "0 1.2px 2.4px #0002",
+              border: "1.2px solid #e5e7eb",
+            }}
+            aria-hidden="true"
+          />
+        </div>
+        {/* Inner right label (inline) */}
+        {shouldShowLabels && labelPosition === "inline" && renderLabel("right")}
       </div>
-      {label && (
+      {/* Right label */}
+      {shouldShowLabels && labelPosition === "outer" && renderLabel("right")}
+      {/* For legacy label prop (fallback, only if left/rightLabel not provided) */}
+      {!shouldShowLabels && label && (
         <span
           style={{
             marginLeft: "0.28em",
@@ -145,10 +209,12 @@ function ToggleSwitch({
         style={{ display: "none" }}
         type="checkbox"
         checked={!!effectiveChecked}
-        onChange={(e) => {
-          // Event for form libraries etc.
-          handleToggle(e);
-        }}
+        onChange={
+          (e) => {
+            // Event for form libraries etc.
+            handleToggle(e);
+          }
+        }
         id={id}
         name={name}
         tabIndex={-1}
@@ -164,6 +230,10 @@ ToggleSwitch.propTypes = {
   defaultChecked: PropTypes.bool,
   onChange: PropTypes.func,
   label: PropTypes.string,
+  leftLabel: PropTypes.node,
+  rightLabel: PropTypes.node,
+  showLabels: PropTypes.bool,
+  labelPosition: PropTypes.oneOf(["outer", "inline"]),
   id: PropTypes.string,
   name: PropTypes.string,
   disabled: PropTypes.bool,

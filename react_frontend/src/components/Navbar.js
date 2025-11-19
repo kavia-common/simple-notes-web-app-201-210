@@ -46,7 +46,10 @@ const Navbar = () => {
         <ToggleSwitch
           checked={darkChecked}
           onChange={(checked, e) => setDarkChecked(checked)}
-          label="Dark Mode"
+          leftLabel="Light"
+          rightLabel="Dark"
+          showLabels={true}
+          labelPosition="inline"
           id="navbar-darkmode-switch"
           name="navbar-darkmode-switch"
           // not connected to actual theme, demonstrative only
