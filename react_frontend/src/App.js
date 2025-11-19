@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar';
+import './components/Navbar.css';
 
 // PUBLIC_INTERFACE
 function App() {
@@ -17,31 +18,37 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ background: 'var(--bg-primary)', minHeight: '100vh' }}>
+      <Navbar />
+      <button
+        className="theme-toggle"
+        onClick={toggleTheme}
+        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+        style={{
+          position: 'fixed',
+          top: 16,
+          right: 24,
+          zIndex: 110
+        }}
+      >
+        {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+      </button>
+      <main className="app-main-content">
+        {/* 
+          Replace below with your <NotesList /> and <NoteDetail /> components as appropriate.
+          Demo mock layout for content panes is given below.
+        */}
+        <div className="app-content">
+          <aside className="app-list">
+            {/* Replace with <NotesList /> */}
+            <div className="app-list__demo">Notes List Pane</div>
+          </aside>
+          <section className="app-detail">
+            {/* Replace with <NoteDetail /> */}
+            <div className="app-detail__demo">Note Detail Pane</div>
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
